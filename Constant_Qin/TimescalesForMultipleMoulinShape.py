@@ -117,7 +117,7 @@ reslist = [] # Create empty list
 sec_in_day = 24*60*60 
 # Define time vector
 t0 = 0
-tf = 50 #(non dim time) 
+tf = 100 #(non dim time) 
 initial_ratio = 1.1
 #Define profile vector for a realistic glacier
 H0 = 1500./np.sqrt(60000.) #assures ice thickness of 1500 m at 60 km from edge
@@ -125,30 +125,31 @@ L_profile = np.arange(0,61000,1000)
 #L_profile = [30000]#Define recharge (should we define recharge relative to the moulin size maybe?)
 #R_vec = np.arange(1,300,10) #(m3/s)  
 #Define recharge in function of t
-R_vec = [15] #m^3/s, mean discharge into moulin
+R_vec = [3] #m^3/s, mean discharge into moulin
 #R_min = 1 #Minimum daily recharge (used for sine func)
 #R_period = sec_in_day #Period for oscillatory Recharge
 #radius at equilibrium (m)
 #r_heqvec = np.arange(1,31,1) 
-r_heqvec = [20] #(m)
+#r_heqvec = [20] #(m)
 #mean radius at the middle of the moulin (m)
 #r_hmiddlevec = np.arange(1,31,1) 
-#r_hmiddlevec = [20] #(m)
+r_hmiddlevec = [20] #(m)
 #radius at equilibrium (m)
 #Moulin slope (with r is y and z(r) )
 #m_vec = np.array([-0.2, -0.15, -0.1, -0.08, -0.05,  
 #                  0,
 #                  0.05, 0.08,  0.1,  0.12])## Option 2 #Negative slope means base is bigger than top. 
 #
-m_vec = np.linspace(-0.2,0.12,50)
+#m_vec = np.linspace(-0.2,0.12,50)
+m_vec = np.array([-1.15, -0.57, 0, 0.57, 1.15]) # cone H/2
 #m_vec = np.linspace(-0.05,0.05,50)
 #m_vec = np.array([-0.05,-0.01,-0.001, 
 #                  0,
 #                  0.001, 0.01, 0.05 ])## Option 2 #Negative slope means base is bigger than top. 
 #m_vec = [0]
 
-res_filename = 'results_TauProfile_slope_hmiddle_AGU19' #change file name each time and describe what it contains in overleaf
-para_filename = 'param_TauProfile_slope_hmiddle_AGU19' #change file name each time and describe what it contains in overleaf
+# res_filename = 'results_TauProfile_slope_hmiddle_AGU19' #change file name each time and describe what it contains in overleaf
+# para_filename = 'param_TauProfile_slope_hmiddle_AGU19' #change file name each time and describe what it contains in overleaf
 
 
 
@@ -180,8 +181,8 @@ colors = [plt.cm.rainbow(i) for i in np.linspace(0, 1, len(m_vec))]
 ##plt.rc('figure', titlesize=14)  # fontsize of the figure title
 
 
-for r_heq in r_heqvec:
-#for r_hmiddle in r_hmiddlevec:    
+#for r_heq in r_heqvec:
+for r_hmiddle in r_hmiddlevec:    
     #print('r_heq =', r_heq)
     for R_mean in R_vec:
 #        for L in L_profile: #for timeseries
@@ -213,15 +214,15 @@ for r_heq in r_heqvec:
                 h_eq = eq_sol.x[0] #(–)
                 S_eq = eq_sol.x[1] #(–)
                 
-                #print(h_eq)
-                #Calculate r_base and r_top based on r_heq.
-                r_base = r_heq - m*h_eq*hfl #(m) hfl is used to dimensionalized h_eq
-                r_top = m*z + r_base #(m)
+                ##print(h_eq)
+                ##Calculate r_base and r_top based on r_heq.
+                #r_base = r_heq - m*h_eq*hfl #(m) hfl is used to dimensionalized h_eq
+                #r_top = m*z + r_base #(m)
                
-##                #Calculate r_base and r_top based on r_hmiddle.
-#                r_base = r_hmiddle - m*(z/2)#(m)
-#                r_top = m*z + r_base #(m) #(m)
-#                r_heq = m * h_eq *hfl + r_base #(m) hfl is used to dimensionalized h_eq
+                #Calculate r_base and r_top based on r_hmiddle.
+                r_base = r_hmiddle - m*(z/2)#(m)
+                r_top = m*z + r_base #(m) #(m)
+                r_heq = m * h_eq *hfl + r_base #(m) hfl is used to dimensionalized h_eq
                 
                 #Find the cross-section area at h_eq
                 AR_heq =  np.pi * r_heq**2 #(m^2)
@@ -351,7 +352,8 @@ for r_heq in r_heqvec:
 #                
 #%% 
                 #plt.plot(resdic['L'],resdic['damping'],'o')               
-                
+res_filename = 'results_TauProfile_H2' #change file name each time and describe what it contains in overleaf
+para_filename = 'param_TauProfile_H2' #change file name each time and describe what it contains in overleaf               
 # Save list of dictionary. !!Change name each time and move to Result_lists folder,
 
 outfile = open(res_filename,'wb') #This means that the data will be written in the form of byte objects.
