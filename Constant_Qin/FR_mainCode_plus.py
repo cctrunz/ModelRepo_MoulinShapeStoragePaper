@@ -48,15 +48,16 @@ Purple = '#6B52A2'
 """
 DEFINE FUNCTIONS
 """
-def calc_zr_rectangle(h_eq_nd,hfl,dh_above,dh_below,r1, r2):
+def calc_zr_rectangle(h_eq_nd,hfl,dh_above,dh_below,r0, r_min, r_heq,r_top):
     ''' This function produces a vector of moulin radius and a position vector 
     z, upward from the base of the moulin.
     '''   
-    h_max = h_eq_nd*hfl + dh_above #dh are in m
+    h_top = h_eq_nd*hfl + dh_above #dh are in m
     h_min = h_eq_nd*hfl - dh_below #dh are in m
+    h_eq = h_eq_nd*hfl
     
-    z = np.array([0, h_min-0.001, h_min, h_max])#, h_max+0.01, param.H])
-    r = np.array([r1, r1,  r2, r2])#,  r_else,r_else])
+    z = np.array([0, h_min, h_eq, h_top])#, h_max+0.01, param.H])
+    r = np.array([r0, r_min,  r_heq, r_top])#,  r_else,r_else])
     return [z,r]
 
 
@@ -107,8 +108,12 @@ def calcTauMelt(L,Pi,C1,C3,R):
 
 def calc_sim(   R = 3, #m^3/s, mean discharge into moulin
                 r_fix = 5,#np.linspace(0.1,10,5)##
-                r1 = 5,
-                r2 = 5,
+                r0 = 5, 
+                r_min = 5, 
+                r_heq = 5,
+                r_top = 5,
+                #r1 = 5,
+                #r2 = 5,
                 z_fix = 'H2',
                 shape = 'linear', #linear for cone, nodes for bottle and goblet
                 m = 0,
@@ -179,7 +184,7 @@ def calc_sim(   R = 3, #m^3/s, mean discharge into moulin
 
     if shape == 'nodes':
         dh_above = H-h_eq_nd*hfl # distance from heq to top of the moulin, in meters
-        z_vector,r_vector = calc_zr_rectangle(h_eq_nd,hfl,dh_above,dh_below,r1,r2)
+        z_vector,r_vector = calc_zr_rectangle(h_eq_nd,hfl,dh_above,dh_below,r0, r_min, r_heq,r_top)
         
     
     r_heq = np.interp(h_eq_nd*hfl,z_vector,r_vector) 
@@ -290,7 +295,8 @@ def calc_sim(   R = 3, #m^3/s, mean discharge into moulin
         resdic = {  'T1':T1,'T2':T2,\
             'H':H, 'r_vector':r_vector, 'z_vector':z_vector, 'r_heq':r_heq, 'R':R, 'L':L,\
             'S0':S0, 'h0':h0,\
-            'r1':r1, 'r2':r2,\
+            'r0':r0, 'r_min':r_min, 'r_heq':r_heq, 'r_top':r_min,\
+            'hfl': hfl,'h_top': h_eq_nd*hfl + dh_above,'h_min': h_eq_nd*hfl - dh_below,\
             'tnd':tnd, 'hnd':hnd, 'Snd':Snd, 'hnd_fit':hnd_fit, 'hnd_approx':hnd_approx, 'hd_approx':hd_approx,\
             'S_eq_nd':S_eq_nd, 'h_eq_nd':h_eq_nd, 'S_eq_approx':S_eq_approx, 'h_eq_approx': h_eq_approx,\
             'S':Sd, 'h':hd, 't':td, 'h_eq_d':h_eq_d,\
@@ -305,11 +311,11 @@ def calc_sim(   R = 3, #m^3/s, mean discharge into moulin
     return resdic   
 
 
-def plot_FR_JGR(results_dictionnary,variable='r',letter=['a','b','c']):
+def plot_FR_JGR(results_dictionnary,variable='r',letter=['a','b','c'], shape='linear', position='any'):
     
     res = results_dictionnary
     
-    fig = plt.figure(figsize=(7,2.7),dpi=300)
+    fig = plt.figure(figsize=(7.4,2.1),dpi=300) #(figsize=(7,2.7),dpi=300) for previous version
     grid = plt.GridSpec(2, 30, wspace=0, hspace=0)
     ax1 = fig.add_subplot(grid[0:1, :19])
     ax2 = fig.add_subplot(grid[0:, 20:])
@@ -320,7 +326,7 @@ def plot_FR_JGR(results_dictionnary,variable='r',letter=['a','b','c']):
     
     for i in np.arange(len(res)):
         
-                    
+        # Moulin head            
         ax1.plot(res[i]['td'],res[i]['hd'],color=colors[i],lw=2) 
         ax1.set_ylim([500,res[i]['H']])
         ax1.set_ylabel('h (m)')
@@ -329,30 +335,41 @@ def plot_FR_JGR(results_dictionnary,variable='r',letter=['a','b','c']):
         ax1.get_yaxis().set_label_coords(-0.08,0.4)
         ax1.axes.xaxis.set_visible(False)
         
-
+        # Moulin walls
         ax2.plot(res[i]['r_vector'],res[i]['z_vector'],color=colors[i],lw=2)
-        ax2.plot(-res[i]['r_vector'],res[i]['z_vector'],color=colors[i],lw=2)
+        ax2.plot(-np.array(res[i]['r_vector']),res[i]['z_vector'],color=colors[i],lw=2)
         ax2.set_xlim([-30,30]) 
         ax2.set_ylim([0,1000])
         ax2.yaxis.tick_right()
         ax2.set_yticks([100,300,500,700,900]) 
         ax2.set_yticklabels([100,300,500,700,900])
-        ax2.set_xlabel('r (m)')
         ax2.set_ylabel('z (m)')
-        ax2.set_title('Moulin profile',fontsize=10)
+        if position == 'top' or position == 'middle':
+            ax2.set_xticklabels([]) 
+        else:
+            ax2.set_xlabel('r (m)')            
+        if position == 'middle' or position == 'bottom':
+            pass
+        else:
+            ax2.set_title('Moulin profile',fontsize=10)
         ax2.yaxis.set_label_position("right")
         
+        # Subglacial cross-section area
         ax3.plot(res[i]['td'],res[i]['Sd'],color=colors[i],lw=2)
         ax3.set_ylim([0.9,2])
         ax3.set_yticks([1,1.2,1.4,1.6]) 
         ax3.set_yticklabels([1,1.2,1.4,1.6])
-        ax3.set_xticks([0,2,4,6,8,10,12,14,16,18,20]) 
-        ax3.set_xticklabels([0,2,4,6,8,10,12,14,16,18,20])
+        if position == 'top' or position == 'middle':
+            ax3.set_xticklabels([])  
+        else:
+            ax3.set_xticks([0,2,4,6,8,10,12,14,16,18,20]) 
+            ax3.set_xticklabels([0,2,4,6,8,10,12,14,16,18,20])
+            ax3.set_xlabel('Days')
         ax3.set_xlim([-1,20])
         ax3.set_ylabel('S (m)')
-        ax3.set_xlabel('Days')
         ax3.get_yaxis().set_label_coords(-0.08,0.4)
         
+        # remove axis
         ax1.spines['top'].set_visible(False)
         ax1.spines['bottom'].set_visible(False)
         ax1.spines['right'].set_visible(False)
@@ -370,19 +387,31 @@ def plot_FR_JGR(results_dictionnary,variable='r',letter=['a','b','c']):
         ax1.tick_params(direction='in')
         ax2.tick_params(direction='in')
         ax3.tick_params(direction='in')
-                        
-    # zz = np.linspace(0,res[0]['h_eq_d'])
-    # x1 =  res[0]['m']*zz + res[0]['r_base']
-    # x2 =  res[-1]['m']*zz + res[-1]['r_base']
         
-    # ax2.fill([-x1[0], -x1[-1], x1[-1], x1[0]],
-    #     [zz[0],zz[-1],zz[-1],zz[0]],
-    #     facecolor='#3990AC', alpha=0.2)
-    # ax2.fill([-x2[0], -x2[-1], x2[-1], x2[0]],
-    #     [zz[0],zz[-1],zz[-1],zz[0]],
-    #     facecolor='#3990AC', alpha=0.2)
+            
+
+
+    if shape == 'linear':   
+        zz = np.linspace(0,res[0]['h_eq_d'])
+        x1 =  res[0]['m']*zz + res[0]['r_base']
+        x2 =  res[-1]['m']*zz + res[-1]['r_base']
+        
+        ax2.fill([-x1[0], -x1[-1], x1[-1], x1[0]],
+            [zz[0],zz[-1],zz[-1],zz[0]],
+            facecolor='#3990AC', alpha=0.2)
+        ax2.fill([-x2[0], -x2[-1], x2[-1], x2[0]],
+            [zz[0],zz[-1],zz[-1],zz[0]],
+            facecolor='#3990AC', alpha=0.2)
+
+    if shape == 'nodes':
+        ax2.fill([-float(res[0]['r0']), -float(res[0]['r_min']), -float(res[0]['r_heq']), res[0]['r_heq'], res[0]['r_min'], res[0]['r0']],
+            [0,res[0]['h_min'],res[0]['h_eq_d'],res[0]['h_eq_d'],res[0]['h_min'],0],
+            facecolor='#3990AC', alpha=0.2)
+        ax2.fill([-float(res[-1]['r0']), -float(res[-1]['r_min']), -float(res[-1]['r_heq']), res[-1]['r_heq'], res[-1]['r_min'], res[-1]['r0']],
+            [0,res[0]['h_min'],res[0]['h_eq_d'],res[0]['h_eq_d'],res[0]['h_min'],0],
+            facecolor='#3990AC', alpha=0.2)
     
-    
+   
     ax1.text(0.07, 0.9, letter[0], ha='right', va='top', transform=ax1.transAxes,fontsize=8, 
               bbox=dict(facecolor='white', edgecolor='none', pad=1.0))
     ax2.text(0.1, 0.98, letter[1], ha='right', va='top', transform=ax2.transAxes,fontsize=8, 
