@@ -146,7 +146,7 @@ def calc_sim(   R = 3, #m^3/s, mean discharge into moulin
     #Calculate variable depending on L and z       
     #z = round(H0*np.sqrt(L),-1) # ice thickness for a square root glacier.
     if profile == True:
-        H0 = 1500/np.sqrt(60000) #assures ice thickness of 1500 m at 60 km from edge
+        H0 = 1000/np.sqrt(30000) #assures ice thickness of 1500 m at 60 km from edge
         H = H0*np.sqrt(L) # ice thickness for a square root glacier.
     else:
         H = H_fix
@@ -183,8 +183,20 @@ def calc_sim(   R = 3, #m^3/s, mean discharge into moulin
         r_vector = [r_base,r_top]
 
     if shape == 'nodes':
-        dh_above = H-h_eq_nd*hfl # distance from heq to top of the moulin, in meters
-        z_vector,r_vector = calc_zr_rectangle(h_eq_nd,hfl,dh_above,dh_below,r0, r_min, r_heq,r_top)
+        if profile == True:
+            h_eq = h_eq_nd*hfl
+            dh_above = H-h_eq # distance from heq to top of the moulin, in meters
+            h_top = h_eq_nd*hfl + dh_above #dh are in m
+            h_min = h_eq_nd*hfl - dh_below #dh are in m   
+            r_min = m*(h_eq-h_min)-r_heq
+            r_top = r_min
+            
+            z_vector = np.array([0, h_min, h_eq, h_top])#, h_max+0.01, param.H])
+            r_vector = np.array([r0, r_min,  r_heq, r_top])#,  r_else,r_else])
+            #z_vector,r_vector = calc_zr_rectangle(h_eq_nd,hfl,dh_above,dh_below,r0, r_min, r_heq,r_top)            
+        else:
+            dh_above = H-h_eq_nd*hfl # distance from heq to top of the moulin, in meters
+            z_vector,r_vector = calc_zr_rectangle(h_eq_nd,hfl,dh_above,dh_below,r0, r_min, r_heq,r_top)
         
     
     r_heq = np.interp(h_eq_nd*hfl,z_vector,r_vector) 
@@ -234,12 +246,14 @@ def calc_sim(   R = 3, #m^3/s, mean discharge into moulin
     
     p0 = [alpha,beta,0,np.pi] 
     try:
-        pop, pcov = curve_fit(MouTimFit, tnd , hnd , p0=p0)#, bounds=(lowerbound,upperbound))   
-    except RuntimeError:
+        pop, pcov = curve_fit(MouTimFit, tnd , hnd , p0=p0)#, bounds=(lowerbound,upperbound)) 
+
+    except (ValueError, RuntimeError):
         alpha_fit = 9999
         beta_fit = 9999
         Cst_fit = 9999
         phi_fit = 9999
+
     else:           
         alpha_fit = pop[0]
         beta_fit = pop[1]
