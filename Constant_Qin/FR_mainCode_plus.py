@@ -427,10 +427,10 @@ def plot_FR_JGR(results_dictionnary,variable='r',letter=['a','b','c'], shape='li
             facecolor='#3990AC', alpha=0.2)
 
     if shape == 'nodes':
-        ax2.fill([-float(res[0]['r0']), -float(res[0]['r_min']), -float(res[0]['r_heq']), res[0]['r_heq'], res[0]['r_min'], res[0]['r0']],
+        ax2.fill([-float(res[0]['r_min']), -float(res[0]['r_min']), -float(res[0]['r_heq']), res[0]['r_heq'], res[0]['r_min'], res[0]['r_min']],
             [0,res[0]['h_min'],res[0]['h_eq_d'],res[0]['h_eq_d'],res[0]['h_min'],0],
             facecolor='#3990AC', alpha=0.2)
-        ax2.fill([-float(res[-1]['r0']), -float(res[-1]['r_min']), -float(res[-1]['r_heq']), res[-1]['r_heq'], res[-1]['r_min'], res[-1]['r0']],
+        ax2.fill([-float(res[-1]['r_min']), -float(res[-1]['r_min']), -float(res[-1]['r_heq']), res[-1]['r_heq'], res[-1]['r_min'], res[-1]['r_min']],
             [0,res[0]['h_min'],res[0]['h_eq_d'],res[0]['h_eq_d'],res[0]['h_min'],0],
             facecolor='#3990AC', alpha=0.2)
     
