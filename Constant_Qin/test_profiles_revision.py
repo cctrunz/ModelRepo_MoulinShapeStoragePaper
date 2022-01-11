@@ -39,12 +39,20 @@ z_vector_cylinder = []
 alpha_fit_cylinder = []
 beta_fit_cylinder = []
 pcov_cylinder = []
+cst_fit_cylinder = []
+phi_fit_cylinder = []
+tau_res_cylinder = []
+beta_aprox_cylinder = []
 for r in radius_cylinder:
     col_damp = []
     col_oscillation = []
     col_alpha_fit = []
     col_beta_fit = []
     col_pcov = []
+    col_Cst_fit = []
+    col_phi_fit = []
+    col_tau_res_cylinder = []
+    col_beta_aprox_cylinder = []
     for L in profile:
         resdic = frplus.calc_sim(r_fix=r,L=L,profile=True)
         col_damp.append(resdic['damping_fit'])
@@ -52,6 +60,10 @@ for r in radius_cylinder:
         col_alpha_fit.append(resdic['alpha_fit'])
         col_beta_fit.append(resdic['beta_fit'])
         col_pcov.append(resdic['pcov'])
+        col_Cst_fit.append(resdic['Cst_fit'])
+        col_phi_fit.append(resdic['phi_fit'])
+        col_tau_res_cylinder.append(resdic['TauRes'])
+        col_beta_aprox_cylinder.append(resdic['beta'])
     damping_cylinder.append(col_damp) 
     oscillation_cylinder.append(col_oscillation)
     r_vector_cylinder.append(resdic['r_vector'])
@@ -59,7 +71,11 @@ for r in radius_cylinder:
     alpha_fit_cylinder.append(col_alpha_fit)
     beta_fit_cylinder.append(col_beta_fit)
     pcov_cylinder.append(col_pcov)
-#%%     
+    cst_fit_cylinder.append(col_Cst_fit)
+    phi_fit_cylinder.append(col_phi_fit)
+    tau_res_cylinder.append(col_tau_res_cylinder)
+    beta_aprox_cylinder.append(col_beta_aprox_cylinder)
+#%%    
 damping_H2 = []
 oscillation_H2 = []
 r_vector_H2 = []
@@ -67,12 +83,18 @@ z_vector_H2 = []
 alpha_fit_H2 = []
 beta_fit_H2 = []
 pcov_H2 = []
+cst_fit_H2 = []
+phi_fit_H2 = []
+tau_res_H2 = []
 for m in slope_h2:
     col_damp = []
     col_oscillation = []
     col_alpha_fit = []
     col_beta_fit = []
     col_pcov = []
+    col_Cst_fit = []
+    col_phi_fit = []
+    col_tau_res_cylinder = []
     for L in profile:
         resdic = frplus.calc_sim(r_fix=10,m=m,L=L,profile=True,z_fix='H2')
         col_damp.append(resdic['damping_fit'])
@@ -80,6 +102,9 @@ for m in slope_h2:
         col_alpha_fit.append(resdic['alpha_fit'])
         col_beta_fit.append(resdic['beta_fit'])
         col_pcov.append(resdic['pcov'])
+        col_Cst_fit.append(resdic['Cst_fit'])
+        col_phi_fit.append(resdic['phi_fit'])
+        col_tau_res_cylinder.append(resdic['TauRes'])
     damping_H2.append(col_damp) 
     oscillation_H2.append(col_oscillation)
     r_vector_H2.append(resdic['r_vector'])
@@ -87,7 +112,9 @@ for m in slope_h2:
     alpha_fit_H2.append(col_alpha_fit)
     beta_fit_H2.append(col_beta_fit)
     pcov_H2.append(col_pcov)
-
+    cst_fit_H2.append(col_Cst_fit)
+    phi_fit_H2.append(col_phi_fit)
+    tau_res_H2.append(col_tau_res_cylinder)
     
 damping_heq = []
 oscillation_heq = []
@@ -96,12 +123,18 @@ z_vector_heq = []
 alpha_fit_heq = []
 beta_fit_heq = []
 pcov_heq = []
+cst_fit_heq = []
+phi_fit_heq = []
+tau_res_heq = []
 for m in slope_heq:
     col_damp = []
     col_oscillation = []
     col_alpha_fit = []
     col_beta_fit = []
     col_pcov = []
+    col_Cst_fit = []
+    col_phi_fit = []
+    col_tau_res_cylinder = []
     for L in profile:
         resdic = frplus.calc_sim(r_fix=10,m=m,L=L,profile=True,z_fix='heq')
         col_damp.append(resdic['damping_fit'])
@@ -109,6 +142,9 @@ for m in slope_heq:
         col_alpha_fit.append(resdic['alpha_fit'])
         col_beta_fit.append(resdic['beta_fit'])
         col_pcov.append(resdic['pcov'])
+        col_Cst_fit.append(resdic['Cst_fit'])
+        col_phi_fit.append(resdic['phi_fit'])
+        col_tau_res_cylinder.append(resdic['TauRes'])
     damping_heq.append(col_damp) 
     oscillation_heq.append(col_oscillation)
     r_vector_heq.append(resdic['r_vector'])
@@ -116,8 +152,11 @@ for m in slope_heq:
     alpha_fit_heq.append(col_alpha_fit)
     beta_fit_heq.append(col_beta_fit)
     pcov_heq.append(col_pcov)
+    cst_fit_heq.append(col_Cst_fit)
+    phi_fit_heq.append(col_phi_fit)
+    tau_res_heq.append(col_tau_res_cylinder)
     
-#%%       
+    
 damping_losange = []
 oscillation_losange = []
 r_vector_losange = []
@@ -125,12 +164,18 @@ z_vector_losange = []
 alpha_fit_losange = []
 beta_fit_losange = []
 pcov_losange = []
+cst_fit_losange = []
+phi_fit_losange = []
+tau_res_losange = []
 for m in slope_losange:
     col_damp = []
     col_oscillation = []
     col_alpha_fit = []
     col_beta_fit = []
     col_pcov = []
+    col_Cst_fit = []
+    col_phi_fit = []
+    col_tau_res_cylinder = []
     for L in profile:
         resdic = frplus.calc_sim(shape = 'nodes',#,dh_below = 300,
                                  r_heq = 10,
@@ -143,6 +188,9 @@ for m in slope_losange:
         col_alpha_fit.append(resdic['alpha_fit'])
         col_beta_fit.append(resdic['beta_fit'])
         col_pcov.append(resdic['pcov'])
+        col_Cst_fit.append(resdic['Cst_fit'])
+        col_phi_fit.append(resdic['phi_fit'])
+        col_tau_res_cylinder.append(resdic['TauRes'])
     damping_losange.append(col_damp) 
     oscillation_losange.append(col_oscillation)
     r_vector_losange.append(resdic['r_vector'])
@@ -150,7 +198,9 @@ for m in slope_losange:
     alpha_fit_losange.append(col_alpha_fit)
     beta_fit_losange.append(col_beta_fit)
     pcov_losange.append(col_pcov)
-    
+    cst_fit_losange.append(col_Cst_fit)
+    phi_fit_losange.append(col_phi_fit)
+    tau_res_losange.append(col_tau_res_cylinder)    
 #%%    
 def plot_moulin(ax,r_vector,z_vector):
     ax.plot(r_vector[i],z_vector[i],color=colors[i],lw=lw)
@@ -216,14 +266,15 @@ ax3.set_xticks([])
 ax5.set_xticks([])
 ax7.set_xticks([])
 
-ax1.set_xlim([0,40])
-ax2.set_xlim([0,40])
-ax3.set_xlim([0,40])
-ax4.set_xlim([0,40])
-ax5.set_xlim([0,40])
-ax6.set_xlim([0,40])
-ax7.set_xlim([0,40])
-ax8.set_xlim([0,40])
+xlim=[0,40]
+ax1.set_xlim(xlim)
+ax2.set_xlim(xlim)
+ax3.set_xlim(xlim)
+ax4.set_xlim(xlim)
+ax5.set_xlim(xlim)
+ax6.set_xlim(xlim)
+ax7.set_xlim(xlim)
+ax8.set_xlim(xlim)
 
 ylim1=[0,8]
 ylim2=[0,20]
@@ -321,6 +372,8 @@ ax0b.set_title('Cone (common \n radii at H/2)', fontsize=10)
 ax0c.set_title('Cone \n(equilibrium head)', fontsize=10)
 ax0d.set_title('Diamond-Hourglass \n(equilibrium head)', fontsize=10)
 
+cond_margin = profile >= 10000
+
 for i in np.arange(5): 
 
     #plot moulin shapes
@@ -336,20 +389,24 @@ for i in np.arange(5):
     
     '''Change radius with fixed slope'''
     #ax1.plot(profile/1000,oscillation_cylinder[i],color=colors[i], lw=lw, linestyle=linestyles[i])
-    ax1.plot(profile[cond_cylinder]/1000,np.array(oscillation_cylinder[i])[cond_cylinder],color=colors[i], lw=lw, linestyle=linestyles[i])
+    ax1.plot(profile[cond_cylinder]/1000,np.array(oscillation_cylinder[i])[cond_cylinder],color=colors[i], lw=lw, linestyle=':')
+    ax1.plot(profile[cond_cylinder*cond_margin]/1000,np.array(oscillation_cylinder[i])[cond_cylinder*cond_margin],color=colors[i], lw=lw, linestyle=linestyles[i])
     #ax1.plot(profile[cond_cylinder]/1000,np.array(oscillation_cylinder[i])[cond_cylinder],'.', color=colors[i])
     ax2.plot(profile[cond_cylinder]/1000,np.array(damping_cylinder[i])[cond_cylinder],color=colors[i], lw=lw, linestyle=linestyles[i])
     
     '''Change slope with h_middle fixed'''
-    ax3.plot(profile[cond_h2]/1000,np.array(oscillation_H2[i])[cond_h2],color=colors[i], lw=lw, linestyle=linestyles[i])
+    ax3.plot(profile[cond_h2]/1000,np.array(oscillation_H2[i])[cond_h2],color=colors[i], lw=lw, linestyle=':')
+    ax3.plot(profile[cond_h2*cond_margin]/1000,np.array(oscillation_H2[i])[cond_h2*cond_margin],color=colors[i], lw=lw, linestyle=linestyles[i])
     ax4.plot(profile[cond_h2]/1000,np.array(damping_H2[i])[cond_h2],color=colors[i], lw=lw, linestyle=linestyles[i])
     
     '''Change slope with h_eq fixed'''
-    ax5.plot(profile[cond_heq]/1000,np.array(oscillation_heq[i])[cond_heq],color=colors[i], lw=lw, linestyle=linestyles[i])
+    ax5.plot(profile[cond_heq]/1000,np.array(oscillation_heq[i])[cond_heq],color=colors[i], lw=lw, linestyle=':')
+    ax5.plot(profile[cond_heq*cond_margin]/1000,np.array(oscillation_heq[i])[cond_heq*cond_margin],color=colors[i], lw=lw, linestyle=linestyles[i])
     ax6.plot(profile[cond_heq]/1000,np.array(damping_heq[i])[cond_heq],color=colors[i], lw=lw, linestyle=linestyles[i])
 
     '''Change radius with h_eq fixed for losange'''
-    ax7.plot(profile[cond_losange]/1000,np.array(oscillation_losange[i])[cond_losange],color=colors[i], lw=lw, linestyle=linestyles[i])
+    ax7.plot(profile[cond_losange]/1000,np.array(oscillation_losange[i])[cond_losange],color=colors[i], lw=lw, linestyle=':')
+    ax7.plot(profile[cond_losange*cond_margin]/1000,np.array(oscillation_losange[i])[cond_losange*cond_margin],color=colors[i], lw=lw, linestyle=linestyles[i])
     ax8.plot(profile[cond_losange]/1000,np.array(damping_losange[i])[cond_losange],color=colors[i], lw=lw, linestyle=linestyles[i])
 
 
@@ -359,44 +416,81 @@ for i in np.arange(5):
 plt.savefig('timescales_across_icesheet.pdf')
 
 #%%
+# damping_fit = np.abs(1/alpha_fit) # * AR_heq*hfl/R
+# oscillation_fit = 2*np.pi/beta_fit #* AR_heq*hfl/R #(day)
 
-
-fig,axs = plt.subplots(5,4,figsize=(7.48,6),dpi=300)
+fig,axs = plt.subplots(11,4,figsize=(7.48,10),dpi=300)
 for i in np.arange(5):
     cond_cylinder = np.array(alpha_fit_cylinder[i]) != 9999
     cond_h2 = np.array(alpha_fit_H2[i]) != 9999
     cond_heq = np.array(alpha_fit_heq[i]) != 9999
     cond_losange = np.array(alpha_fit_losange[i]) != 9999
+    damp_cylinder = np.abs(1/np.array(alpha_fit_cylinder[i])[cond_cylinder])
+    osc_cylinder = 2*np.pi/np.array(beta_fit_cylinder[i])[cond_cylinder]
+    damp_H2 = np.abs(1/np.array(alpha_fit_H2[i])[cond_h2])
+    osc_H2 = 2*np.pi/np.array(beta_fit_H2[i])[cond_h2]
+    damp_heq = np.abs(1/np.array(alpha_fit_heq[i])[cond_heq])
+    osc_heq = 2*np.pi/np.array(beta_fit_heq[i])[cond_heq]
+    damp_losange = np.abs(1/np.array(alpha_fit_losange[i])[cond_losange])
+    osc_losange = 2*np.pi/np.array(beta_fit_losange[i])[cond_losange]
     
     axs[0, 0].plot(profile[cond_cylinder]/1000,np.array(damping_cylinder[i])[cond_cylinder],'.')
     axs[1, 0].plot(profile[cond_cylinder]/1000,np.array(oscillation_cylinder[i])[cond_cylinder],'.')
     axs[2, 0].plot(profile[cond_cylinder]/1000,np.array(alpha_fit_cylinder[i])[cond_cylinder],'.')
     axs[3, 0].plot(profile[cond_cylinder]/1000,np.array(beta_fit_cylinder[i])[cond_cylinder],'.')
     axs[4, 0].plot(profile[cond_cylinder]/1000,np.array(alpha_fit_cylinder[i])[cond_cylinder]/np.array(beta_fit_cylinder[i])[cond_cylinder],'.')
-
+    axs[5, 0].plot(profile[cond_cylinder]/1000,np.array(cst_fit_cylinder[i])[cond_cylinder],'.')
+    axs[6, 0].plot(profile[cond_cylinder]/1000,np.array(phi_fit_cylinder[i])[cond_cylinder],'.')
+    axs[7, 0].plot(profile[cond_cylinder]/1000,damp_cylinder,'.')
+    axs[8, 0].plot(profile[cond_cylinder]/1000,osc_cylinder,'.')
+    axs[9, 0].plot(profile[cond_cylinder]/1000,np.array(tau_res_cylinder[i])[cond_cylinder],'.')
+    axs[10, 0].plot(profile[cond_cylinder]/1000,np.array(beta_aprox_cylinder[i])[cond_cylinder],'.')
+    
     axs[0, 1].plot(profile[cond_h2]/1000,np.array(damping_H2[i])[cond_h2],'.')
     axs[1, 1].plot(profile[cond_h2]/1000,np.array(oscillation_H2[i])[cond_h2],'.')
     axs[2, 1].plot(profile[cond_h2]/1000,np.array(alpha_fit_H2[i])[cond_h2],'.')
     axs[3, 1].plot(profile[cond_h2]/1000,np.array(beta_fit_H2[i])[cond_h2],'.')
     axs[4, 1].plot(profile[cond_h2]/1000,np.array(alpha_fit_H2[i])[cond_h2]/np.array(beta_fit_H2[i])[cond_h2],'.')
+    axs[5, 1].plot(profile[cond_h2]/1000,np.array(cst_fit_H2[i])[cond_h2],'.')
+    axs[6, 1].plot(profile[cond_h2]/1000,np.array(phi_fit_H2[i])[cond_h2],'.')
+    axs[7, 1].plot(profile[cond_h2]/1000,damp_H2,'.')
+    axs[8, 1].plot(profile[cond_h2]/1000,osc_H2,'.')
+    axs[9, 1].plot(profile[cond_h2]/1000,np.array(tau_res_H2[i])[cond_h2],'.')
     
     axs[0, 2].plot(profile[cond_heq]/1000,np.array(damping_heq[i])[cond_heq],'.')
     axs[1, 2].plot(profile[cond_heq]/1000,np.array(oscillation_heq[i])[cond_heq],'.')    
     axs[2, 2].plot(profile[cond_heq]/1000,np.array(alpha_fit_heq[i])[cond_heq],'.')
     axs[3, 2].plot(profile[cond_heq]/1000,np.array(beta_fit_heq[i])[cond_heq],'.')
     axs[4, 2].plot(profile[cond_heq]/1000,np.array(alpha_fit_heq[i])[cond_heq]/np.array(beta_fit_heq[i])[cond_heq],'.')
-
+    axs[5, 2].plot(profile[cond_heq]/1000,np.array(cst_fit_heq[i])[cond_heq],'.')
+    axs[6, 2].plot(profile[cond_heq]/1000,np.array(phi_fit_heq[i])[cond_heq],'.')
+    axs[7, 2].plot(profile[cond_heq]/1000,damp_heq,'.')
+    axs[8, 2].plot(profile[cond_heq]/1000,osc_heq,'.')
+    axs[9, 2].plot(profile[cond_heq]/1000,np.array(tau_res_heq[i])[cond_heq],'.')
+    
     axs[0, 3].plot(profile[cond_losange]/1000,np.array(damping_losange[i])[cond_losange],'.')
     axs[1, 3].plot(profile[cond_losange]/1000,np.array(oscillation_losange[i])[cond_losange],'.')
     axs[2, 3].plot(profile[cond_losange]/1000,np.array(alpha_fit_losange[i])[cond_losange],'.')
     axs[3, 3].plot(profile[cond_losange]/1000,np.array(beta_fit_losange[i])[cond_losange],'.')
     axs[4, 3].plot(profile[cond_losange]/1000,np.array(alpha_fit_losange[i])[cond_losange]/np.array(beta_fit_losange[i])[cond_losange],'.')
-
+    axs[5, 3].plot(profile[cond_losange]/1000,np.array(cst_fit_losange[i])[cond_losange],'.')
+    axs[6, 3].plot(profile[cond_losange]/1000,np.array(phi_fit_losange[i])[cond_losange],'.')
+    axs[7, 3].plot(profile[cond_losange]/1000,damp_losange,'.')
+    axs[8, 3].plot(profile[cond_losange]/1000,osc_losange,'.')
+    axs[9, 3].plot(profile[cond_losange]/1000,np.array(tau_res_losange[i])[cond_losange],'.')
+    
 axs[0,0].set_ylabel('damping')
 axs[1,0].set_ylabel('oscillation')
-axs[2,0].set_ylabel('alpha')
-axs[3,0].set_ylabel('beta')
+axs[2,0].set_ylabel('alpha fit')
+axs[3,0].set_ylabel('beta fit')
 axs[4,0].set_ylabel('alpha/beta')
+axs[5,0].set_ylabel('cst fit')
+axs[6,0].set_ylabel('phi fit')
+axs[7,0].set_ylabel('non-dim\ndamping')
+axs[8,0].set_ylabel('non-dim\noscillation')
+axs[9,0].set_ylabel('Tau residence')
+axs[10,0].set_ylabel('beta aprox')
+
 
 axs[2,1].set_xlabel('distance from margin (km)')
 
@@ -406,6 +500,102 @@ axs[0,2].set_title('heq')
 axs[0,3].set_title('diamond-hourglass')
 
 plt.savefig('comparison_alpha_beta_test')
+
+
+#%%
+# damping_fit = np.abs(1/alpha_fit) # * AR_heq*hfl/R
+# oscillation_fit = 2*np.pi/beta_fit #* AR_heq*hfl/R #(day)
+
+fig,axs = plt.subplots(6,4,figsize=(7.48,6),dpi=300)#, sharey=True)
+for i in np.arange(5):
+    cond_cylinder = np.array(alpha_fit_cylinder[i]) != 9999
+    cond_h2 = np.array(alpha_fit_H2[i]) != 9999
+    cond_heq = np.array(alpha_fit_heq[i]) != 9999
+    cond_losange = np.array(alpha_fit_losange[i]) != 9999
+    
+    osc_cylinder = 2*np.pi/np.array(beta_fit_cylinder[i])[cond_cylinder]
+    osc_H2 = 2*np.pi/np.array(beta_fit_H2[i])[cond_h2]
+    osc_heq = 2*np.pi/np.array(beta_fit_heq[i])[cond_heq]
+    osc_losange = 2*np.pi/np.array(beta_fit_losange[i])[cond_losange]
+    
+    osc_cylinder_aprox = 2*np.pi/np.array(beta_aprox_cylinder[i])[cond_cylinder]
+
+    
+    axs[0, 0].plot(profile[cond_cylinder]/1000,np.array(damping_cylinder[i])[cond_cylinder]/np.array(oscillation_cylinder[i])[cond_cylinder],'.')
+    axs[1, 0].plot(profile[cond_cylinder]/1000,np.array(beta_aprox_cylinder[i])[cond_cylinder],'.')
+    axs[2, 0].plot(profile[cond_cylinder]/1000,np.array(beta_fit_cylinder[i])[cond_cylinder],'.')
+    axs[3, 0].plot(profile[cond_cylinder]/1000,osc_cylinder,'.')
+    axs[4, 0].plot(profile[cond_cylinder]/1000,osc_cylinder_aprox,'.')
+    axs[5, 0].plot(profile[cond_cylinder]/1000,np.array(tau_res_cylinder[i])[cond_cylinder],'.')
+
+    axs[0, 1].plot(profile[cond_h2]/1000,np.array(oscillation_H2[i])[cond_h2],'.')
+    axs[2, 1].plot(profile[cond_h2]/1000,np.array(beta_fit_H2[i])[cond_h2],'.')
+    axs[3, 1].plot(profile[cond_h2]/1000,osc_H2,'.')
+    axs[5, 1].plot(profile[cond_h2]/1000,np.array(tau_res_H2[i])[cond_h2],'.')
+    
+    axs[0, 2].plot(profile[cond_heq]/1000,np.array(oscillation_heq[i])[cond_heq],'.')    
+    axs[2, 2].plot(profile[cond_heq]/1000,np.array(beta_fit_heq[i])[cond_heq],'.')
+    axs[3, 2].plot(profile[cond_heq]/1000,osc_heq,'.')
+    axs[5, 2].plot(profile[cond_heq]/1000,np.array(tau_res_heq[i])[cond_heq],'.')
+    
+    axs[0, 3].plot(profile[cond_losange]/1000,np.array(oscillation_losange[i])[cond_losange],'.')
+    axs[2, 3].plot(profile[cond_losange]/1000,np.array(beta_fit_losange[i])[cond_losange],'.')
+    axs[3, 3].plot(profile[cond_losange]/1000,osc_losange,'.')
+    axs[5, 3].plot(profile[cond_losange]/1000,np.array(tau_res_losange[i])[cond_losange],'.')
+    
+
+axs[0,0].set_ylabel('oscillation')
+axs[1,0].set_ylabel('beta aprox')
+axs[2,0].set_ylabel('beta fit')
+axs[3,0].set_ylabel('non-dim\noscillation fit')
+axs[4,0].set_ylabel('non-dim\noscillation aprox')
+axs[5,0].set_ylabel('Tau residence')
+
+
+
+axs[2,1].set_xlabel('distance from margin (km)')
+
+axs[0,0].set_title('Cylinder')
+axs[0,1].set_title('H/2')
+axs[0,2].set_title('heq')
+axs[0,3].set_title('diamond-hourglass')
+
+#plt.savefig('comparison_alpha_beta_test')
+
+#%%
+fig,ax = plt.subplots(1,1,figsize=(7.48,6),dpi=300)
+for i in np.arange(5):
+    cond_cylinder = np.array(alpha_fit_cylinder[i]) != 9999
+    cond_h2 = np.array(alpha_fit_H2[i]) != 9999
+    cond_heq = np.array(alpha_fit_heq[i]) != 9999
+    cond_losange = np.array(alpha_fit_losange[i]) != 9999
+    
+    # ax.plot(profile[cond_cylinder]/1000,np.array(damping_cylinder[i])[cond_cylinder],'.')
+    # ax.plot(profile[cond_cylinder]/1000,np.array(oscillation_cylinder[i])[cond_cylinder],'.')
+    # ax.plot(profile[cond_cylinder]/1000,np.array(alpha_fit_cylinder[i])[cond_cylinder],'.')
+    # ax.plot(profile[cond_cylinder]/1000,np.array(beta_fit_cylinder[i])[cond_cylinder],'.')
+    # ax.plot(profile[cond_cylinder]/1000,np.array(beta_fit_cylinder[i])[cond_cylinder]/np.array(alpha_fit_cylinder[i])[cond_cylinder],'.')
+    ax.plot(profile[cond_cylinder]/1000,np.array(cst_fit_cylinder[i])[cond_cylinder],'.')
+    # ax.plot(profile[cond_cylinder]/1000,np.array(phi_fit_cylinder[i])[cond_cylinder],'.')
+    
+    # ax.plot(profile[cond_h2]/1000,np.array(damping_H2[i])[cond_h2],'.')
+    # ax.plot(profile[cond_h2]/1000,np.array(oscillation_H2[i])[cond_h2],'.')
+    # ax.plot(profile[cond_h2]/1000,np.array(alpha_fit_H2[i])[cond_h2],'.')
+    # ax.plot(profile[cond_h2]/1000,np.array(beta_fit_H2[i])[cond_h2],'.')
+    # ax.plot(profile[cond_h2]/1000,np.array(alpha_fit_H2[i])[cond_h2]/np.array(beta_fit_H2[i])[cond_h2],'.')
+    
+    # ax.plot(profile[cond_heq]/1000,np.array(damping_heq[i])[cond_heq],'.')
+    # ax.plot(profile[cond_heq]/1000,np.array(oscillation_heq[i])[cond_heq],'.')    
+    # ax.plot(profile[cond_heq]/1000,np.array(alpha_fit_heq[i])[cond_heq],'.')
+    # ax.plot(profile[cond_heq]/1000,np.array(beta_fit_heq[i])[cond_heq],'.')
+    # ax.plot(profile[cond_heq]/1000,np.array(alpha_fit_heq[i])[cond_heq]/np.array(beta_fit_heq[i])[cond_heq],'.')
+
+    # ax.plot(profile[cond_losange]/1000,np.array(damping_losange[i])[cond_losange],'.')
+    # ax.plot(profile[cond_losange]/1000,np.array(oscillation_losange[i])[cond_losange],'.')
+    # ax.plot(profile[cond_losange]/1000,np.array(alpha_fit_losange[i])[cond_losange],'.')
+    # ax.plot(profile[cond_losange]/1000,np.array(beta_fit_losange[i])[cond_losange],'.')
+    # ax.plot(profile[cond_losange]/1000,np.array(alpha_fit_losange[i])[cond_losange]/np.array(beta_fit_losange[i])[cond_losange],'.')
+
 #%%
 for r in [5,10,15]:
     plt.figure()
@@ -470,4 +660,17 @@ for m in [-0.06,0.06]:
 # for i in np.arange(5):
 #     cond_cylinder = np.array(beta_fit[i]) != 9999
 #     plt.plot(profile[cond_cylinder]/1000,np.array(beta_fit[i])[cond_cylinder]/np.array(alpha_fit[i])[cond_cylinder],'o',color=colors[i])#, lw=lw, linestyle=linestyles[i])
+
+# #Definition of Timescales equations
+# def calcTauRes(AR_heq,hfl,R):
+#     return AR_heq*hfl/R #(s)
+
+# def MouTimFit(t, alpha, beta, Cst, phi):
+#         return np.exp(alpha*t) * Cst * np.sin(beta*t + phi) + h_eq_nd 
+    
+# damping_fit = np.abs(1/alpha_fit)  * AR_heq*hfl/R
+# oscillation_fit = 2*np.pi/beta_fit * AR_heq*hfl/R #(day)
+
+    # Pi = rhoi*g*H #Units?? Ice pressure   
+    # hfl = Pi/rhow/g #(m) head at overburden pressure. to dimentionalize h  
 
