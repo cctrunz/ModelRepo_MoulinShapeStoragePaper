@@ -112,12 +112,13 @@ def calc_sim(   R = 3, #m^3/s, mean discharge into moulin
                 r_min = 5, 
                 r_heq = 5,
                 r_top = 5,
+                slope = False,
                 #r1 = 5,
                 #r2 = 5,
-                z_fix = 'H2',
+                z_fix = 'H2', # or 'heq'
                 shape = 'linear', #linear for cone, nodes for bottle and goblet
                 m = 0,
-                dh_below = 10, # distance below heq in meters!!  #dh2 =  , # distance above heq
+                #dh_below = 10, # distance below heq in meters!!  #dh2 =  , # distance above heq
                 t0 = 0,
                 tf = 100, #(non dim time) 
                 initial_ratio = 1.1,
@@ -152,7 +153,6 @@ def calc_sim(   R = 3, #m^3/s, mean discharge into moulin
         H = H_fix
     Pi = rhoi*g*H #Units?? Ice pressure   
     hfl = Pi/rhow/g #(m) head at overburden pressure. to dimentionalize h  
-   
     
     #Define initial AR_heq, T1 and T2. h_eq and S_eq do not depend on the moulin radius or shape.
     T1_approx = calcTauRes(1,hfl,R) / calcTauMelt(L,Pi,C1,C3,R) # 6e-8 – 6 #(–)
@@ -186,16 +186,22 @@ def calc_sim(   R = 3, #m^3/s, mean discharge into moulin
         if profile == True:
             h_eq = h_eq_nd*hfl
             dh_above = H-h_eq # distance from heq to top of the moulin, in meters
-            h_top = h_eq_nd*hfl + dh_above #dh are in m
-            h_min = h_eq_nd*hfl - dh_below #dh are in m   
-            r_min = m*(h_eq-h_min)-r_heq
-            r_top = r_min
-            
-            z_vector = np.array([0, h_min, h_eq, h_top])#, h_max+0.01, param.H])
-            r_vector = np.array([r0, r_min,  r_heq, r_top])#,  r_else,r_else])
+            #print(H)
+            dh_below = dh_above    
+            h_top = h_eq + dh_above #dh are in m
+            h_min = h_eq - dh_below #dh are in m   
+            if slope == True:
+                r_min = m*dh_below+r_heq #abs(-m*(h_eq-h_min)-r_heq)
+                r_top = r_min  
+                z_vector = np.array([0, h_min, h_eq, h_top])#, h_max+0.01, param.H])
+                r_vector = np.array([r_min, r_min,  r_heq, r_top])#,  r_else,r_else])
+            else:                     
+                z_vector = np.array([0, h_min, h_eq, h_top])#, h_max+0.01, param.H])
+                r_vector = np.array([r0, r_min,  r_heq, r_top])#,  r_else,r_else])
             #z_vector,r_vector = calc_zr_rectangle(h_eq_nd,hfl,dh_above,dh_below,r0, r_min, r_heq,r_top)            
         else:
             dh_above = H-h_eq_nd*hfl # distance from heq to top of the moulin, in meters
+            dh_below = dh_above
             z_vector,r_vector = calc_zr_rectangle(h_eq_nd,hfl,dh_above,dh_below,r0, r_min, r_heq,r_top)
         
     
@@ -253,6 +259,7 @@ def calc_sim(   R = 3, #m^3/s, mean discharge into moulin
         beta_fit = 9999
         Cst_fit = 9999
         phi_fit = 9999
+        pcov = 9999
 
     else:           
         alpha_fit = pop[0]
@@ -299,6 +306,7 @@ def calc_sim(   R = 3, #m^3/s, mean discharge into moulin
                     'S':Sd, 'h':hd, 't':td, 'h_eq_d':h_eq_d,\
                     'Q':Q,\
                     'alpha':alpha, 'beta':beta,\
+                    'pcov':pcov,\
                     'alpha_fit':alpha_fit, 'beta_fit':beta_fit, 'Cst_fit':Cst_fit, 'phi_fit':phi_fit, \
                     'damping':damping, 'damping_fit':damping_fit, 'oscillation_fit':oscillation_fit, 'oscillation':oscillation,\
                     'Sd':Sd, 'hd':hd, 'td':td, 'hd_fit':hd_fit,\
@@ -316,6 +324,7 @@ def calc_sim(   R = 3, #m^3/s, mean discharge into moulin
             'S':Sd, 'h':hd, 't':td, 'h_eq_d':h_eq_d,\
             'Q':Q,\
             'alpha':alpha, 'beta':beta,\
+            'pcov':pcov,\
             'alpha_fit':alpha_fit, 'beta_fit':beta_fit, 'Cst_fit':Cst_fit, 'phi_fit':phi_fit, \
             'damping':damping, 'damping_fit':damping_fit, 'oscillation_fit':oscillation_fit, 'oscillation':oscillation,\
             'Sd':Sd, 'hd':hd, 'td':td, 'hd_fit':hd_fit,\
