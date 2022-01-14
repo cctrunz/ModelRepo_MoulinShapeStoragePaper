@@ -156,7 +156,7 @@ ax8 = plt.subplot(gs1[15])
 
 
 #frameon=False
-offset=(5,5)
+offset=(2,2)
 sns.despine(ax=ax0a, offset=offset, bottom=True)
 sns.despine(ax=ax0b, offset=offset, bottom=True, left=True)
 sns.despine(ax=ax0c, offset=offset, bottom=True, left=True)
@@ -215,7 +215,7 @@ ax8.set_ylim(ylim2)
 ax1.set_yticks([0,2,4,6,8])
 ax2.set_yticks([0,5,10,15,20]) 
 ax0a.set_yticks([0,1500/2,1200,1500])
-ax0a.set_yticklabels(['0','H/2','h_eq','H'])
+ax0a.set_yticklabels(['0','$H/2$','$h_{eq}$','$H$'])
 ax0b.set_yticks([])
 ax0c.set_yticks([])
 ax0d.set_yticks([])
@@ -299,9 +299,9 @@ ax8.text(0.1, pos2,'l', ha='right', va='top', transform=ax8.transAxes,fontsize=8
 
 
 ax0a.set_title('Cylinder\n ', fontsize=10)
-ax0b.set_title('Cone\n(common radii at H/2Y)\n ', fontsize=10)
-ax0c.set_title('Cone\n(equilibrium head)\n ', fontsize=10)
-ax0d.set_title('Diamond-Hourglass\n(equilibrium head)\n ', fontsize=10)
+ax0b.set_title('Cone\n(common radii at $H/2$)\n ', fontsize=10)
+ax0c.set_title('Cone\n(common radii at $h_{eq}$)\n ', fontsize=10)
+ax0d.set_title('Diamond-Hourglass\n(common radii at $h_{eq}$)\n ', fontsize=10)
 
 
 for i in np.arange(5): 
