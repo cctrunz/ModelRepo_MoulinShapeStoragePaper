@@ -8,4 +8,4 @@ This repository contains all the functions and ipython notebook to create the fi
 ## Simulations with constant input, Section 3.1 (Figure 2 and Figure 3)
 
 ### Figure 2 -- 
-[Code to reproduce Figure 3](Figure3.ipynb)
+[Code to reproduce Figure 3](Constant_Qin/Figure3.ipynb)
