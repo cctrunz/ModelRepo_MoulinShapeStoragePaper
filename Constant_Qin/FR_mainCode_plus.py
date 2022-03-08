@@ -1,5 +1,7 @@
 #%%
-""" Extract timescales of oscillation and decay (alpha and beta) for CONE shaped moulin
+""" 
+Calculates moulin head and subglacial channel timeseries.
+Extract timescales of oscillation and decay (alpha and beta) for CYLINDRICAL, CONE and HOURGLASS-DIAMOND shaped moulin
 
 Use the non-dimentionalised version of Schoof 2010 model and the the approximation.
 Both are derived by Matt Covington. This code is not intended to be used long term,
@@ -7,6 +9,10 @@ but it is intended to serve as an easier platform to implement the changes from 
 constant moulin cross-section area to one depending on the head
 
 Code based on Matt Covington code. Modified by Celia Trunz. Fall 2019, Buffalo NY
+
+to calculate the simulation results: results = calc_sim()
+
+To do: add comments
 
 """
 #%%
@@ -106,8 +112,8 @@ def calcTauMelt(L,Pi,C1,C3,R):
 
 
 
-def calc_sim(   R = 3, #m^3/s, mean discharge into moulin
-                r_fix = 5,#np.linspace(0.1,10,5)##
+def calc_sim(   R = 3, # m^3/s, mean discharge into moulin
+                r_fix = 5, #np.linspace(0.1,10,5)##
                 r0 = 5, 
                 r_min = 5, 
                 r_heq = 5,
