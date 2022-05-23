@@ -26,4 +26,5 @@ Here you can find the [constants](Oscillating_Qin/Constant_JGRpaper.py) and the 
 
 
 ## Simulations comparison between a 0D and a discretized 1D subglacial channel model, with an oscillating input. 
-  The 
+  The 1D model for the subglacial channel is [onedim_channel_model.py](Compare_0D_1D/onedim_channel_model.py)
+### [Code to reproduce the supporting Figures S6 and S7](Compare_0D_1D/Supplemental_figures_S06_S07.ipynb)
