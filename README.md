@@ -21,10 +21,10 @@ The model and the plotting function are held in this python file: [FR_mainCode_p
 For those simulations, the model coded as a function inside the notebook directly. 
 Here you can find the [constants](Oscillating_Qin/Constant_JGRpaper.py) and the [parameters](Oscillating_Qin/Parameters.py) we used for the simulations.
 
-### [Code to reproduce the subpanels in Figure 4](Oscillating_Qin/OscillationRecharge_Figures-Parameters-For-JGR.ipynb)
+### [Code to reproduce the subpanels in Figure 4](Oscillating_Qin/OscillationRecharge_Figures-Parameters-For-JGR.ipynb) -- Simulations for 5 different shapes.
   
 
 
 ## Simulations comparison between a 0D and a discretized 1D subglacial channel model, with an oscillating input. 
   The 1D model for the subglacial channel is [onedim_channel_model.py](Compare_0D_1D/onedim_channel_model.py)
-### [Code to reproduce the supporting Figures S6 and S7](Compare_0D_1D/Supplemental_figures_S06_S07.ipynb)
+### [Code to reproduce the supporting Figures S6 and S7](Compare_0D_1D/Supplemental_figures_S06_S07.ipynb) 
