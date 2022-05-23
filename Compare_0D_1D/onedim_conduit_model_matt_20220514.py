@@ -101,6 +101,12 @@ class one_dim_sim:
 
     def calc_C3(self):
         return self.params["C"] / np.sqrt(self.params["rho_w"] * self.params["f"])
+    
+    def calc_S_equiv(self):
+        # Calculate equivalent S that would produce the same discharge given the total head gradient
+        n_segs = len(self.S)
+        self.S_equiv = (n_segs / (self.S**(-5./2.)).sum())**(2./5.)
+        return self.S_equiv
 
     def calc_flow(self):
         dh_tot = self.h_node[0] - self.h_node[-1]
