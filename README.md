@@ -22,3 +22,8 @@ For those simulations, the model coded as a function inside the notebook directl
 Here you can find the [constants](Oscillating_Qin/Constant_JGRpaper.py) and the [parameters](Oscillating_Qin/Parameters.py) we used for the simulations.
 
 ### [Code to reproduce the subpanels in Figure 4](Oscillating_Qin/OscillationRecharge_Figures-Parameters-For-JGR.ipynb)
+  
+
+
+## Simulations comparison between a 0D and a discretized 1D subglacial channel model, with an oscillating input. 
+  The 
