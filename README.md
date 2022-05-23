@@ -1,5 +1,8 @@
 # Model Repository
-This repository is a supplement to the paper "Modeling the impact of moulin shape on englacial hydrology", currently submitted to JGR earth processes
+This repository is a supplement to the paper "Modeling the influence of moulin shape on subglacial hydrology", currently submitted to JGR earth processes
+
+Trunz, C., Covington, M. D., Poinar, K., Andrews, L. C., Mejia Zimmerman, J., & Gulley, J. (submitted 2022). Modeling the influence of moulin shape on subglacial hydrology. In review at JGR earth process.
+
 
 The folders called Constant_Qin and Oscillating_Qin hold the code used to simulate the head in moulins with a constant meltwater input and a oscillating meltwater input respectively.
 
